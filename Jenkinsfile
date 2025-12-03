@@ -5,7 +5,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Pull code from GitHub
-                git branch: 'main', url: 'https://github.com/Arshad-ashuu/jenk_flask_demo'
+                git branch: 'main', url: 'https://github.com/Arshad-ashuu/jenk_flask_demo.git'
             }
         }
 
@@ -19,7 +19,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo '##################### Running Python script... ####################'
-                sh 'python app.py'
+                sh 'python3 app.py'
             }
         }
     }
