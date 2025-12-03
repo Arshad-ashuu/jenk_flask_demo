@@ -1,13 +1,12 @@
 pipeline {
     agent any   // runs on any available Jenkins agent
 
-    stages {
-        stage('Checkout') {
-            steps {
-                // Pull code from GitHub
+        stages {
+            stage('Checkout') {
+                steps {
                 git branch: 'main', url: 'https://github.com/Arshad-ashuu/jenk_flask_demo.git'
+             }
             }
-        }
 
         stage('Build') {
             steps {
