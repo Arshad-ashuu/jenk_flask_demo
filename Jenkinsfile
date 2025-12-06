@@ -2,15 +2,18 @@ pipeline {
     agent {
         docker {
             image 'python:3.10-slim'
+            // optional: args '-u root' if you need extra installs
         }
     }
 
     stages {
+
         stage('Setup Python Environment') {
             steps {
                 sh '''
-                    python -m venv venv
+                    python3 -m venv venv
                     . venv/bin/activate
+                    pip install --upgrade pip
                     if [ -f requirements.txt ]; then
                         pip install -r requirements.txt
                     fi
@@ -18,7 +21,7 @@ pipeline {
             }
         }
 
-       stage('Run Tests') {
+        stage('Run Tests') {
             steps {
                 sh '''
                     . venv/bin/activate
@@ -30,8 +33,6 @@ pipeline {
         stage('Run Flask App (Sanity Check)') {
             when {
                 expression { return false } 
-                // keep this disabled in CI by default.
-                // you can enable for debugging if needed.
             }
             steps {
                 sh '''
