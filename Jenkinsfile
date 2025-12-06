@@ -1,17 +1,9 @@
 pipeline {
-    agent any   // run on any available Jenkins agent
+    agent any
 
     stages {
-        stage('Checkout') {
-           steps {
-             git url: 'https://github.com/Arshad-ashuu/jenk_flask_demo.git', branch: 'main'
-            }
-        }
-
-
         stage('Setup Python Environment') {
             steps {
-                // Use a virtual environment so dependencies are isolated.
                 sh '''
                     python3 -m venv venv
                     . venv/bin/activate
@@ -35,10 +27,11 @@ pipeline {
 
     post {
         success {
-            echo "######################## Build succeeded! Python script ran successfully.#################################"
+            echo "######################## Build succeeded! ########################"
         }
         failure {
-            echo "######################## Build failed. Check logs for errors.########################"
+            echo "######################## Build failed! ########################"
         }
     }
 }
+     
