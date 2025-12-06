@@ -1,34 +1,45 @@
 pipeline {
-    agent any   // runs on any available Jenkins agent
+    agent any   // run on any available Jenkins agent
 
-        stages {
-            stage('Checkout') {
-                steps {
-                git branch: 'main', url: 'https://github.com/Arshad-ashuu/jenk_flask_demo.git'
-             }
-            }
-
-        stage('Build') {
+    stages {
+        stage('Checkout') {
             steps {
-                echo '################ Building Python project... ####################'
-                // Normally you'd install dependencies here
+                // Jenkins will automatically check out SCM if configured,
+                // but this makes it explicit.
+                checkout scm
             }
         }
 
-        stage('Test') {
+        stage('Setup Python Environment') {
             steps {
-                echo '##################### Running Python script... ####################'
-                sh 'python3 app.py'
+                // Use a virtual environment so dependencies are isolated.
+                sh '''
+                    python3 -m venv venv
+                    . venv/bin/activate
+                    pip install --upgrade pip
+                    if [ -f requirements.txt ]; then
+                        pip install -r requirements.txt
+                    fi
+                '''
+            }
+        }
+
+        stage('Run Python Script') {
+            steps {
+                sh '''
+                    . venv/bin/activate
+                    python app.py
+                '''
             }
         }
     }
 
     post {
         success {
-            echo 'Pipeline executed successfully!'
+            echo "######################## Build succeeded! Python script ran successfully.#################################"
         }
         failure {
-            echo 'Pipeline failed. Check logs.'
+            echo "######################## Build failed. Check logs for errors.########################"
         }
     }
 }
