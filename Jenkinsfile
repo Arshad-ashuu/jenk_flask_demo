@@ -3,9 +3,10 @@ pipeline {
 
     stages {
         stage('Checkout') {
-            steps {
-                checkout scm
-            }
+             steps {
+                  git branch: 'main',
+                    url: 'https://github.com/Arshad-ashuu/jenk_flask_demo.git'
+                }
         }
 
         stage('Setup Python Environment') {
