@@ -18,11 +18,27 @@ pipeline {
             }
         }
 
-        stage('Run Python Script') {
+       stage('Run Tests') {
             steps {
                 sh '''
                     . venv/bin/activate
-                    python app.py
+                    pytest -q
+                '''
+            }
+        }
+
+        stage('Run Flask App (Sanity Check)') {
+            when {
+                expression { return false } 
+                // keep this disabled in CI by default.
+                // you can enable for debugging if needed.
+            }
+            steps {
+                sh '''
+                    . venv/bin/activate
+                    python app.py &
+                    sleep 5
+                    curl -f http://localhost:5000/health
                 '''
             }
         }
@@ -30,10 +46,10 @@ pipeline {
 
     post {
         success {
-            echo "######################## Build succeeded! ########################"
+            echo "Build OK: Tests passed!"
         }
         failure {
-            echo "######################## Build failed! #######################"
+            echo "Build FAILED. Check console log."
         }
     }
 }
