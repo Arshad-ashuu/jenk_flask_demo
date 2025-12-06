@@ -4,24 +4,22 @@ pipeline {
     stages {
         stage('Setup Python Environment') {
             steps {
-                // sh '''
-                //     python3 -m venv venv
-                //     . venv/bin/activate
-                //     pip install --upgrade pip
-                //     if [ -f requirements.txt ]; then
-                //         pip install -r requirements.txt
-                //     fi
-                // '''w
+                sh '''
+                    sudo apt install -y python3 python3-pip python3-venv
+                    python3 -m venv venv
+                    . venv/bin/activate           
+                    pip install -r requirements.txt
+                '''
                 echo "######################## pip install done ########################"
             }
         }
 
         stage('Run Python Script') {
             steps {
-                // sh '''
-                //     . venv/bin/activate
-                //     python app.py
-                // '''
+                sh '''
+                    . venv/bin/activate
+                    python3 app.py
+                '''
                 echo "######################## apppy runnning ########################"
             }
         }
