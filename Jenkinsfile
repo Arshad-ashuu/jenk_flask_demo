@@ -6,7 +6,7 @@ pipeline {
             steps {
                 // Jenkins will automatically check out SCM if configured,
                 // but this makes it explicit.
-                checkout scm
+                git url: 'https://github.com/Arshad-ashuu/jenk_flask_demo.git', branch: 'main'
             }
         }
 
