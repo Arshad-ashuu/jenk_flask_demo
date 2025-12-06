@@ -1,16 +1,20 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'python:3.10-slim'
+        }
+    }
 
     stages {
         stage('Setup Python Environment') {
             steps {
                 sh '''
-                    sudo apt install -y python3 python3-pip python3-venv
-                    python3 -m venv venv
-                    . venv/bin/activate           
-                    pip install -r requirements.txt
+                    python -m venv venv
+                    . venv/bin/activate
+                    if [ -f requirements.txt ]; then
+                        pip install -r requirements.txt
+                    fi
                 '''
-                echo "######################## pip install done ########################"
             }
         }
 
@@ -18,9 +22,8 @@ pipeline {
             steps {
                 sh '''
                     . venv/bin/activate
-                    python3 app.py
+                    python app.py
                 '''
-                echo "######################## apppy runnning ########################"
             }
         }
     }
