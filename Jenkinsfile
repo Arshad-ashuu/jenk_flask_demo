@@ -2,32 +2,27 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
-             steps {
-                  git branch: 'main',
-                    url: 'https://github.com/Arshad-ashuu/jenk_flask_demo.git'
-                }
-        }
-
         stage('Setup Python Environment') {
             steps {
-                sh '''
-                    python3 -m venv venv
-                    . venv/bin/activate
-                    pip install --upgrade pip
-                    if [ -f requirements.txt ]; then
-                        pip install -r requirements.txt
-                    fi
-                '''
+                // sh '''
+                //     python3 -m venv venv
+                //     . venv/bin/activate
+                //     pip install --upgrade pip
+                //     if [ -f requirements.txt ]; then
+                //         pip install -r requirements.txt
+                //     fi
+                // '''
+                echo "######################## pip install done ########################"
             }
         }
 
         stage('Run Python Script') {
             steps {
-                sh '''
-                    . venv/bin/activate
-                    python app.py
-                '''
+                // sh '''
+                //     . venv/bin/activate
+                //     python app.py
+                // '''
+                echo "######################## apppy runnning ########################"
             }
         }
     }
