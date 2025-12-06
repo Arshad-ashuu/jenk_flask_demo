@@ -2,13 +2,12 @@ pipeline {
     agent any   // run on any available Jenkins agent
 
     stages {
-        // stage('Checkout') {
-        //     steps {
-        //         // Jenkins will automatically check out SCM if configured,
-        //         // but this makes it explicit.
-        //         git url: 'https://github.com/Arshad-ashuu/jenk_flask_demo.git', branch: 'main'
-        //     }
-        // }
+        stage('Checkout') {
+           steps {
+             git url: 'https://github.com/Arshad-ashuu/jenk_flask_demo.git', branch: 'main'
+            }
+        }
+
 
         stage('Setup Python Environment') {
             steps {
