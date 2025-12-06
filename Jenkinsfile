@@ -11,7 +11,7 @@ pipeline {
                 //     if [ -f requirements.txt ]; then
                 //         pip install -r requirements.txt
                 //     fi
-                // '''
+                // '''w
                 echo "######################## pip install done ########################"
             }
         }
